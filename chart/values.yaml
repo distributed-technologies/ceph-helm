@@ -1,0 +1,11 @@
+# Default values for cluster.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+cluster: 
+  image: ceph/ceph:v15.2.8
+  dataDirHostPath: /var/lib/rook
+  waitTimeoutForHealthyOSDInMinutes: 10
+  monCount: 3
+  dashboardEnabled: true
+  prometheusEnabled: false
