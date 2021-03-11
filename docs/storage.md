@@ -12,3 +12,8 @@ Object-based storage is efficient when deploying large scale storage systems bec
 
 ## Block-based storage
 Ceph can be mounted as a thinly provisioned block device. When you write data to Ceph using a block device, Ceph will automatically stripe and replicate the data across the cluster. More can be found here: https://rook.io/docs/rook/v1.5/ceph-block.html
+
+# Our implementation
+When deploying Ceph to a Kubernetes cluster, the standard configuration right now is to allow for two ways of storing data. 
+First, we create a storage class for block storage, allowing Kubernetes pods to create PVCs. Second, we create a distributed file system called CephFS wherein pods can mount specific paths and thereby use the same storage as other pods. 
+

@@ -3,9 +3,9 @@ kind: CephBlockPool
 metadata:
   name: replicapool
 spec:
-  failureDomain: host
+  failureDomain: {{ .Values.blockStorage.replicapool.failureDomain }}
   replicated:
-    size: 3
+    size: {{ .Values.blockStorage.replicapool.size }}
     # Disallow setting pool with replica 1, this could lead to data loss without recovery.
     # Make sure you're *ABSOLUTELY CERTAIN* that is what you want
     requireSafeReplicaSize: true
@@ -22,7 +22,7 @@ provisioner: rook-ceph.rbd.csi.ceph.com
 parameters:
     # clusterID is the namespace where the rook cluster is running
     # If you change this namespace, also change the namespace below where the secret namespaces are defined
-    clusterID: rook-ceph # namespace:cluster
+    clusterID: {{ .Release.Namespace }} # namespace:cluster
 
     # If you want to use erasure coded pool with RBD, you need to create
     # two pools. one erasure coded and one replicated.
@@ -69,5 +69,5 @@ parameters:
 # issue that causes the mount to be disconnected. You will need to follow special upgrade steps
 # to restart your application pods. Therefore, this option is not recommended.
 #mounter: rbd-nbd
-allowVolumeExpansion: true
-reclaimPolicy: Delete
+allowVolumeExpansion: {{ .Values.blockStorage.allowVolumeExpansion }}
+reclaimPolicy: {{ .Values.blockStorage.reclaimPolicy }}
